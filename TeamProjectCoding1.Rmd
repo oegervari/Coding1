@@ -2,7 +2,10 @@
 title: "Coding 1 Team Project"
 author: "Team Hong Kong (Maryam, Fatima, Hassan, Oszkar)"
 date: "11/7/2021"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -54,6 +57,10 @@ datasummary(District * (Orbit = Price_orbit) + District * (Coke = Price_coke) ~ 
 
 
 The number of observations is `r sum(!is.na(data$Address))` for all of our key variables.
+
+### Data cleaning
+
+Part of the data cleaning steps were changing the column names, removing the ID column and converting the district to a factor variable. 
 
 ## Price distribution
 
