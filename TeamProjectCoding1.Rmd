@@ -1,0 +1,111 @@
+---
+title: "Coding 1 Team Project"
+author: "Team Hong Kong (Maryam, Fatima, Hassan, Oszkar)"
+date: "11/7/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(modelsummary)
+library(kableExtra)
+library(ggthemes)
+
+data <- read_csv( "https://raw.githubusercontent.com/maryamkhan1120/Coding-1-Hong-Kong/main/HongKong%20_Data.csv")
+
+colnames(data) <- c("ID","Store_name","Address","District","Price_coke","Price_orbit","Distance","Cashier")
+data
+
+data$ID <- NULL
+data
+
+data$District <- factor(data$District)
+is.factor(data$District)
+
+data1 <- data %>% 
+  select(District,Price_coke,Price_orbit) %>% 
+  group_by(District) 
+data1
+
+```
+
+## Introduction
+
+A [data collection survey](https://raw.githubusercontent.com/maryamkhan1120/Coding-1-Hong-Kong/main/HongKong%20_Data.csv) was conducted to collect data about products from multiple shops located across two districts of Budapest. The next segment displays the mean, median and standard deviation (among other descriptive statistic measures) of the price of the two products.
+
+
+## Data
+
+Products chosen for the survey were Coca Cola (0.5 L) and Orbit gum. The main variable examined in this report is the price of the products per district.
+
+The data was collected in person by the team.
+
+```{r, echo=FALSE}
+P5 <- function(x){quantile( x , 0.05, na.rm=T)}
+P95 <- function(x){quantile( x , 0.95, na.rm=T)}
+range_df <- function( x ){ max( x , na.rm = T ) - min( x , na.rm = T ) }
+
+datasummary(District * (Orbit = Price_orbit) + District * (Coke = Price_coke) ~ Mean + Median + SD + Max + Min + N + range_df + P5 + P25 + P75 + P95 , 
+            data= data, 
+            title = 'Descriptive statistics prices', 
+            notes = 'Data are available from: Please refer to link in the introduction') %>% kableExtra::kable_styling(latex_options = "hold_position")
+
+```
+
+
+The number of observations is `r sum(!is.na(data$Address))` for all of our key variables.
+
+## Price distribution
+
+The following histograms show the price distribution for each product per district.
+
+```{r, echo=FALSE, warning=FALSE, fig.width=4, fig.height = 3, fig.show="hold", out.width="50%" }
+
+# ggplot price coke 
+ggplot (data = data1 , aes( x= Price_coke, fill= District)) + 
+  geom_histogram(aes(y=..density..),color= "white",binwidth = 50) +
+  geom_density(aes(y=..density..), color ="black",binwidth=50, alpha=0.5)+
+  facet_grid(~District)+ 
+  xlab("Coke Price") +
+  ylab("Frequency of Price")+
+  annotate( "text" , x = mean( data$Price_coke , na.rm = T ) + 54 , y = 0.013 , label = 'Mean' , color = 'purple')+
+  geom_segment( aes(x = mean( `Price_coke` , na.rm = T ), y = 0, 
+                    xend = mean( `Price_coke`, na.rm = T ) , yend = 0.015) , color = 'darkgreen', size = 1,
+                arrow = arrow(length = unit(0.15, "cm")) )+
+  scale_y_continuous(labels = scales::percent)+
+  ggtitle ("Distribution of Coke (Binned with 50 HUF)")+
+  labs(x='Price of Coke', y= "Kernel Density Percentage")+
+  theme_gdocs()+
+  theme(plot.title=element_text(size= 10,hjust=0.5))
+
+#ggplot orbit 
+ggplot (data = data1 , aes( x= Price_orbit, fill= District)) + 
+  geom_histogram(aes(y=..density..),color= "white", binwidth = 50) +
+  geom_density(aes(y=..density..), color ="black", binwidth=30, alpha=0.5)+
+  facet_grid(~District)+ 
+  scale_x_continuous(name="Price of Orbit", limits=c(100,350), breaks = c(100, 200, 300)) +
+  ylab("Frequency of Price")+
+  annotate( "text" , x = mean( data$Price_orbit , na.rm = T ) + 54 , y = 0.013 , label = 'Mean' , color = 'purple')+
+  geom_segment( aes(x = mean( `Price_orbit` , na.rm = T ), y = 0, 
+                    xend = mean( `Price_orbit`, na.rm = T ) , yend = 0.015) , color = 'darkgreen', size = 1,
+                arrow = arrow(length = unit(0.15, "cm")) )+
+  scale_y_continuous(labels = scales::percent)+
+  ggtitle ("Distribution of Orbit (Binned with 50 HUF)")+
+  labs(x='Price of Orbit', y= "Kernel Density Percentage")+
+  theme_gdocs()+
+  theme(plot.title=element_text(size= 10,hjust=0.5))
+```
+
+
+We chose 50 HUF binwidth as it is a good aggregation of the individual measurements at this pricerange.
+
+The plots show us the distribution of the measurements and the mean per product and per district.
+
+## Conclusion
+
+Based on our measurements we can conclude, that the prices were higher for both products in the 10th district, that means higher mean, standard deviation, minimum and maximum price.
+Having more measurements could strengthen our analysis.
+
+
+
+
