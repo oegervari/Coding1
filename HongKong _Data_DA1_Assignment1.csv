@@ -1,0 +1,22 @@
+,,,,,,,
+ID,Store name,Address,District,PriceCoke500ml,PriceOrbit10p,Distance(m),Cashiers
+1,Elemiszer,"Budapest, Cziraki u.9, 1103",10,219,130,210,1
+2,Spar,"Kerepesi ut, 73, 1106",10,259,179,250,8
+3,dm,"Kerepesi ut, 73, 1106",10,330,200,300,2
+4,Aldi,"Kerepesi ut, 73, 1106",10,259,169,280,5
+5,Spar Express,"Kerepesi ut, 73, 1106",10,305,195,50,1
+6,Coop/ABC,"Kerepesi ut, 144, 1104",10,219,145,65,2
+7,Szupermarket,"Kerepesi ut, 144, 1104",10,279,129,110,2
+8,Shell Cafe,"Kerepesi ut 61, 1106",10,439,299,350,1
+9,Nemzeti Dohanybolt,Örs vezér tere 25,10,320,200,10,4
+10,May May Market,Örs vezér tere 25,10,290,150,20,2
+11,Aldi,Vámház krt. 1-3.,9,260,170,20,6
+12,Rossmann,Lónyay utca 1-3.,9,340,260,50,2
+13,Tesco,Kálvin tér 7.,9,275,190,60,3
+14,Dohánybolt,Kálvin tér 7.,9,300,170,60,1
+15,Asia diszkont,Csarnok tér 5.,9,250,150,30,1
+16,Spar ,Lónyay utca 23.,9,260,180,10,2
+17,Szuper diszkont,Kinizsi utca 19.,9,220,120,90,1
+18,Spar ,Ráday utca 32.,9,260,160,100,5
+19,Asia diszkont,Ráday utca 37.,9,250,130,140,1
+20,Zöldség-gyümölcs vegyesbolt,Ráday utca 9.,9,290,150,230,1
