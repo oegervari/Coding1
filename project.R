@@ -12,9 +12,9 @@ library(ggplot2)
 library(ggthemes)
 library(dplR)
 library(dplyr)
-install.packages("pacman")
+#install.packages("pacman")
 library(pacman)
-install.packages("devtools")
+#install.packages("devtools")
 library(devtools)
 
 data <- read_csv( "https://raw.githubusercontent.com/maryamkhan1120/Coding-1-Hong-Kong/main/HongKong%20_Data.csv")
@@ -51,17 +51,22 @@ range_df <- function( x )
 
 
 
-# quartile fuction 
-q5 <- function(x){
-  quantile( x , c(0.05))
+# 5% percentile fuction 
+P5 <- function(x){
+  quantile( x , 0.05, na.rm=T)
+}
+
+# 95% percentile fuction 
+P95 <- function(x){
+  quantile( x , 0.95, na.rm=T)
 }
 
 #data_summary
-a <- datasummary(District * Price_coke  ~ Mean + Median + Max + Min + SD  + P25 + N + range_df + P75 + q5 , data= data )
+a <- datasummary(District * Price_coke  ~ Mean + Median + Max + Min + SD  + P25 + N + range_df + P75 + P5 + P95, data= data )
 a
-b <- datasummary(District * Price_orbit~ Mean + Median + Max + Min + SD  + N + P25 + P75 + q5 + range_df , data= data)
+b <- datasummary(District * Price_orbit~ Mean + Median + Max + Min + SD  + N + P25 + P75 + P5 + P95 + range_df , data= data)
 b
-c <- datasummary(District * Price_orbit + District * Price_coke ~ Mean + Median + Max + Min + SD  + N + P25 + P75 + q5 + range_df  , data= data)
+c <- datasummary(District * Price_orbit + District * Price_coke ~ Mean + Median + Max + Min + SD  + N + P25 + P75 + P5 + P95 +range_df  , data= data)
 c
 
 
@@ -98,7 +103,7 @@ ggplot (data = data1 , aes( x= Price_orbit, fill= District)) +
   geom_histogram(aes(y=..density..),color= "white", binwidth = 30) +
   geom_density(aes(y=..density..), color ="black", binwidth=30, alpha=0.5)+
   facet_grid(~District)+ 
-  xlab("Coke Price") +
+  scale_x_continuous(name="Orbit Price", limits=c(100,300), breaks = c(100, 200, 300)) +
   ylab("Frequency of Price")+
   annotate( "text" , x = mean( data$Price_orbit , na.rm = T ) + 54 , y = 0.013 , label = 'Mean' , color = 'purple')+
   geom_segment( aes(x = mean( `Price_orbit` , na.rm = T ), y = 0, 
